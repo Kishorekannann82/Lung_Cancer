@@ -10,6 +10,16 @@ RUN npm run build
 # ── Stage 2: Python Backend ───────────────────
 FROM python:3.11-slim
 
+# Install system dependencies for OpenCV
+RUN apt-get update && apt-get install -y \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    libsm6 \
+    libxext6 \
+    libxrender-dev \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app/backend
 
 # Install Python dependencies
@@ -27,7 +37,5 @@ COPY --from=frontend-build /app/frontend/build ../frontend/frontend/build
 
 # Expose port
 EXPOSE 8080
-
-# Start Flask directly — no cd needed
 ENV PORT=8080
 CMD ["python", "app.py"]

@@ -224,8 +224,6 @@ For **research and educational purposes only**. All AI-generated recommendations
 
 ---
 
-## 👨‍💻 Developer
 
-**Kishore Kannan** · [@Kishorekannann82](https://github.com/Kishorekannann82)
 
 <div align="center"><sub>Built for saving lives through AI</sub></div>
