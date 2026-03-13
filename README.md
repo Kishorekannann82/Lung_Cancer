@@ -13,6 +13,8 @@
 
 *Upload a CT scan → Get instant diagnosis, risk stratification, Grad-CAM heatmap & clinical recommendations.*
 
+### 🚀 [Live Demo → web-production-bfdfe.up.railway.app](https://web-production-bfdfe.up.railway.app/)
+
 </div>
 
 ---
@@ -66,6 +68,7 @@ lung-cancer-ai/
 ├── backend/
 │   ├── app.py                    # Flask REST API
 │   ├── config.py                 # Central configuration
+│   ├── download_model.py         # Auto model download
 │   ├── preprocessing/
 │   │   ├── preprocess.py         # Denoise → Resize → Normalize
 │   │   └── dataset_split.py      # 80/20 train/test split
@@ -85,7 +88,7 @@ lung-cancer-ai/
 │           ├── UploadSection.js
 │           └── ResultDashboard.js
 ├── model/
-│   └── cnn_model.h5              # Trained model (Git LFS)
+│   └── cnn_model.h5              # Trained model
 ├── Dockerfile
 └── requirements.txt
 ```
@@ -226,4 +229,3 @@ For **research and educational purposes only**. All AI-generated recommendations
 
 
 
-<div align="center"><sub>Built for saving lives through AI</sub></div>
