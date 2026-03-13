@@ -24,17 +24,23 @@ if not os.getenv("GROQ_API_KEY"):
         pass
 
 # ── Paths ─────────────────────────────────────
-BASE_DIR        = Path("D:/Lung_Cancer")
-DATASET_DIR     = BASE_DIR / "The IQ-OTHNCCD lung cancer dataset"
+# Works both locally (D:\Lung_Cancer) and on Railway
+import sys
 
+if sys.platform == "win32":
+    BASE_DIR = Path("D:/Lung_Cancer")
+else:
+    BASE_DIR = Path(__file__).resolve().parent.parent  # Railway Linux path
+
+DATASET_DIR     = BASE_DIR / "The IQ-OTHNCCD lung cancer dataset"
 RAW_MALIGNANT   = DATASET_DIR / "Malignant cases"
-RAW_BENIGN      = DATASET_DIR / "Bengin cases"    # note: typo in dataset ("Bengin")
-RAW_NORMAL      = DATASET_DIR / "Normal cases"    # treated as Benign
+RAW_BENIGN      = DATASET_DIR / "Bengin cases"
+RAW_NORMAL      = DATASET_DIR / "Normal cases"
 
 PROCESSED_DIR   = BASE_DIR / "processed"
 PROCESSED_DIR.mkdir(parents=True, exist_ok=True)
 
-MODEL_SAVE_PATH = BASE_DIR / "model" / "cnn_model.h5"
+MODEL_SAVE_PATH = Path(__file__).resolve().parent.parent / "model" / "cnn_model.h5"
 MODEL_SAVE_PATH.parent.mkdir(parents=True, exist_ok=True)
 
 # ── Image Settings ────────────────────────────

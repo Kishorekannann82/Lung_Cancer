@@ -25,7 +25,9 @@ from model.gradcam import generate_gradcam
 from model.risk_score import compute_risk_score
 from cdss.recommendations import get_recommendations
 
-app   = Flask(__name__)
+app   = Flask(__name__,
+              static_folder="../frontend/build",
+              static_url_path="/")
 CORS(app)
 
 # ── Load model once at startup ────────────────
@@ -148,7 +150,19 @@ def predict():
         return jsonify({"error": str(e)}), 500
 
 
+# ── Serve React Frontend ──────────────────────
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve_react(path):
+    """Serve React build for all non-API routes."""
+    from flask import send_from_directory
+    if path and os.path.exists(os.path.join(app.static_folder, path)):
+        return send_from_directory(app.static_folder, path)
+    return send_from_directory(app.static_folder, "index.html")
+
+
 # ── Run Server ────────────────────────────────
 if __name__ == "__main__":
     load_model()
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=False, host="0.0.0.0", port=port)
