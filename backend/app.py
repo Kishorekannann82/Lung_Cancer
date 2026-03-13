@@ -26,7 +26,7 @@ from model.risk_score import compute_risk_score
 from cdss.recommendations import get_recommendations
 
 app   = Flask(__name__,
-              static_folder="../frontend/build",
+              static_folder="../frontend/frontend/build",
               static_url_path="/")
 CORS(app)
 
