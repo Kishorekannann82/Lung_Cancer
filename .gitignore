@@ -1,0 +1,46 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+venv/
+env/
+.venv/
+.env
+backend/.env
+# =========================
+# Data (too large for GitHub)
+# =========================
+processed/
+splits/
+The IQ-OTHNCCD lung cancer dataset/
+*.npy
+
+# =========================
+# React
+# =========================
+frontend/frontend/node_modules/
+frontend/frontend/build/
+
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# VS Code
+# =========================
+.vscode/

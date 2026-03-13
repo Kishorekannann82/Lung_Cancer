@@ -6,7 +6,22 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+# Always load .env from backend directory
+env_path = Path(__file__).resolve().parent / ".env"
+load_dotenv(dotenv_path=env_path)
+
+# Fallback: manually parse .env if dotenv fails
+if not os.getenv("GROQ_API_KEY"):
+    try:
+        with open(env_path) as f:
+            for line in f:
+                line = line.strip()
+                if "GROQ_API_KEY" in line and "=" in line:
+                    key = line.split("=", 1)[1].strip().strip('"').strip("'")
+                    os.environ["GROQ_API_KEY"] = key
+                    break
+    except Exception:
+        pass
 
 # ── Paths ─────────────────────────────────────
 BASE_DIR        = Path("D:/Lung_Cancer")
@@ -33,8 +48,8 @@ TEST_RATIO      = 0.2
 RANDOM_SEED     = 42
 
 # ── Training Hyperparameters ──────────────────
-BATCH_SIZE      = 32
-EPOCHS          = 30
+BATCH_SIZE      = 16     # Smaller batch = less RAM on CPU
+EPOCHS          = 25     # EarlyStopping will halt before this if needed
 LEARNING_RATE   = 0.001
 
 # ── Risk Score Weights (Equation 12 from paper)
@@ -51,7 +66,7 @@ RISK_HIGH       = 0.75
 
 # ── Groq API ──────────────────────────────────
 GROQ_API_KEY    = os.getenv("GROQ_API_KEY", "")
-GROQ_MODEL      = "llama3-70b-8192"
+GROQ_MODEL      = "llama-3.3-70b-versatile"
 
 # ── Labels ────────────────────────────────────
 LABEL_MAP       = {1: "Malignant", 0: "Benign"}

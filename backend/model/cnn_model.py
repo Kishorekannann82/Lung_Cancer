@@ -49,18 +49,14 @@ def build_cnn() -> Sequential:
         BatchNormalization(),
         MaxPooling2D((2, 2), name='pool3'),
 
-        # ── Block 4 (deep features) ───────────
-        Conv2D(256, (3, 3), activation='relu', padding='same', name='conv4'),
-        BatchNormalization(),
-
         # ── Global Average Pooling ────────────
         GlobalAveragePooling2D(name='gap'),
 
         # ── Fully Connected Layers ────────────
-        Dense(256, activation='relu', name='fc1'),
+        Dense(128, activation='relu', name='fc1'),
         Dropout(0.5),
 
-        Dense(128, activation='relu', name='fc2'),
+        Dense(64, activation='relu', name='fc2'),
         Dropout(0.3),
 
         # ── Output — Softmax (2 classes) ──────
