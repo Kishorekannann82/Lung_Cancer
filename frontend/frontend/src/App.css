@@ -384,3 +384,148 @@ select option { background: var(--card); }
   border-radius: 4px;
   border: 1px solid rgba(100, 255, 218, 0.2);
 }
+
+/* ── CDSS Tabs ───────────────────────────────── */
+.cdss-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.8rem 0;
+  border-bottom: 1px solid rgba(100,255,218,0.15);
+  padding-bottom: 0.5rem;
+}
+.cdss-tab-btn {
+  background: transparent;
+  border: 1px solid rgba(100,255,218,0.2);
+  color: var(--text-muted);
+  padding: 0.35rem 0.8rem;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.cdss-tab-btn:hover { color: var(--accent); border-color: var(--accent); }
+.cdss-tab-btn.active {
+  background: rgba(100,255,218,0.1);
+  color: var(--accent);
+  border-color: var(--accent);
+}
+.cdss-tab-content { margin-top: 0.5rem; }
+
+/* ── CDSS Section Cards ───────────────────────── */
+.cdss-section-card {
+  border: 1px solid rgba(100,255,218,0.15);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+}
+.cdss-section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+.cdss-section-icon { font-size: 1rem; }
+.cdss-section-title {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+.cdss-section-body { font-size: 0.78rem; color: var(--text-secondary); }
+.cdss-list-item {
+  padding: 0.2rem 0 0.2rem 0.5rem;
+  border-left: 2px solid rgba(100,255,218,0.3);
+  margin: 0.3rem 0;
+  line-height: 1.5;
+}
+.cdss-para { margin: 0.3rem 0; line-height: 1.6; }
+
+/* ── 30-Day Schedule ─────────────────────────── */
+.schedule-section {
+  margin: 2rem 0;
+  background: var(--card-bg);
+  border: 1px solid rgba(100,255,218,0.15);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+.schedule-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+.schedule-icon { font-size: 1.4rem; }
+.schedule-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+.week-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+.week-tab {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 0.7rem 0.5rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all 0.2s;
+  color: var(--text-muted);
+}
+.week-tab:hover {
+  border-color: var(--tab-color);
+  color: var(--tab-color);
+}
+.week-tab.active {
+  background: rgba(100,255,218,0.08);
+  border-color: var(--tab-color);
+  color: var(--tab-color);
+}
+.week-num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.week-focus {
+  font-size: 0.62rem;
+  text-align: center;
+  line-height: 1.3;
+}
+.week-content {
+  background: rgba(0,0,0,0.2);
+  border-radius: 10px;
+  padding: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.schedule-line { padding: 0.25rem 0; font-size: 0.78rem; line-height: 1.5; }
+.time-entry {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  border-top: 1px solid rgba(100,255,218,0.08);
+  padding-top: 0.5rem;
+  margin-top: 0.3rem;
+}
+.bullet-entry {
+  color: var(--text-secondary);
+  padding-left: 1rem;
+  border-left: 2px solid rgba(100,255,218,0.2);
+  margin: 0.2rem 0 0.2rem 0.5rem;
+}
+.text-entry { color: var(--text-muted); }
+
+@media (max-width: 600px) {
+  .week-tabs { grid-template-columns: repeat(2, 1fr); }
+}
