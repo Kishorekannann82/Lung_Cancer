@@ -23,6 +23,7 @@ from config import MODEL_SAVE_PATH, BASE_DIR
 from preprocessing.preprocess import preprocess_image
 from model.gradcam import generate_gradcam
 from model.risk_score import compute_risk_score
+from model.staging   import generate_staging_report
 from cdss.recommendations import get_recommendations
 
 app   = Flask(__name__,
@@ -36,6 +37,9 @@ model = None
 def load_model():
     global model
     if model is None:
+        # Download model from Google Drive if not present (Railway deployment)
+        from download_model import download_model
+        download_model()
         print("[INFO] Loading CNN model...")
         model = tf.keras.models.load_model(str(MODEL_SAVE_PATH))
         print("[INFO] Model loaded ✅")
@@ -116,11 +120,21 @@ def predict():
         )
 
         # ── 6. Grad-CAM ───────────────────────
-        overlay, _ = generate_gradcam(m, processed, class_idx=class_idx)
+        overlay, heatmap = generate_gradcam(m, processed, class_idx=class_idx)
         _, buffer  = cv2.imencode(".png", overlay)
         gradcam_b64 = base64.b64encode(buffer).decode("utf-8")
 
-        # ── 7. Groq CDSS Recommendations ──────
+        # ── 7. Staging, Tumor Size, Survival ──
+        staging = generate_staging_report(
+            malignancy_prob = malignant_prob,
+            risk_score      = risk["risk_score"],
+            risk_tier       = risk["risk_tier"],
+            gradcam_heatmap = heatmap,
+            age             = age,
+            smoking_status  = smoking_status
+        )
+
+        # ── 8. Groq CDSS Recommendations ──────
         patient_data = {
             "age":             age,
             "smoking_status":  smoking_status,
@@ -128,19 +142,23 @@ def predict():
             "classification":  classification,
             "malignancy_prob": malignant_prob,
             "risk_tier":       risk["risk_tier"],
-            "risk_score":      risk["risk_score"]
+            "risk_score":      risk["risk_score"],
+            "cancer_stage":    staging["cancer_stage"]["stage_roman"],
+            "tumor_size":      staging["tumor_size"]["size_range_cm"],
+            "survival_rate":   staging["survival_rate"]["five_year_survival"]
         }
         cdss = get_recommendations(patient_data)
 
-        # ── 8. Cleanup temp file ──────────────
+        # ── 9. Cleanup temp file ──────────────
         os.remove(tmp_path)
 
-        # ── 9. Return full response ───────────
+        # ── 10. Return full response ───────────
         return jsonify({
             "classification":    classification,
             "benign_prob":       round(benign_prob, 4),
             "malignant_prob":    round(malignant_prob, 4),
             "risk":              risk,
+            "staging":           staging,
             "gradcam_image":     gradcam_b64,
             "recommendations":   cdss["recommendations"],
             "disclaimer":        cdss["disclaimer"]
@@ -164,5 +182,6 @@ def serve_react(path):
 # ── Run Server ────────────────────────────────
 if __name__ == "__main__":
     load_model()
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ.get("PORT", 8080))
+    print(f"[INFO] Starting server on port {port}")
     app.run(debug=False, host="0.0.0.0", port=port)

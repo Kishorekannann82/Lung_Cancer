@@ -309,3 +309,78 @@ select option { background: var(--card); }
   .risk-factors { grid-template-columns: 1fr 1fr; }
   .header       { padding: 1rem 1.5rem; }
 }
+
+/* ── Staging Section ─────────────────────── */
+.staging-section {
+  margin: 1.5rem 0;
+}
+.section-title {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.staging-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+.staging-card {
+  background: var(--card-bg);
+  border: 1px solid rgba(100, 255, 218, 0.15);
+  border-radius: 12px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: border-color 0.2s;
+}
+.staging-card:hover {
+  border-color: rgba(100, 255, 218, 0.35);
+}
+.staging-card.benign-staging {
+  border-color: rgba(0, 230, 118, 0.2);
+}
+.staging-icon {
+  font-size: 1.5rem;
+  margin-bottom: 0.2rem;
+}
+.staging-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+.staging-value {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.staging-sub {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+.staging-desc {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.staging-tnm {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 0.4rem;
+}
+.staging-tnm span {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  background: rgba(100, 255, 218, 0.08);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(100, 255, 218, 0.2);
+}
