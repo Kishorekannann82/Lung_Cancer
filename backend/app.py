@@ -37,9 +37,6 @@ model = None
 def load_model():
     global model
     if model is None:
-        # Download model from Google Drive if not present (Railway deployment)
-        from download_model import download_model
-        download_model()
         print("[INFO] Loading CNN model...")
         model = tf.keras.models.load_model(str(MODEL_SAVE_PATH))
         print("[INFO] Model loaded ✅")
